@@ -1,4 +1,4 @@
-from autograd import MojTensor
+from mojotorch import MojTensor
 from math import exp, log as math_log
 
 fn add(a: MojTensor, b: MojTensor) -> MojTensor:

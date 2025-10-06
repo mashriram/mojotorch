@@ -5,7 +5,7 @@ struct MojTensor(Copyable,Movable):
     var _shape: List[Int]
     var data: List[Float64]
     var requires_grad: Bool
-    var grad: Optional[MojTensor]
+    var grad: Optional[Self]
 
     fn __init__(out self, shape: List[Int], requires_grad: Bool = False):
         self._shape = shape.copy()
@@ -16,7 +16,7 @@ struct MojTensor(Copyable,Movable):
         for _ in range(size):
             self.data.append(0.0)
         self.requires_grad = requires_grad
-        self.grad = Optional[MojTensor]()
+        self.grad = Optional[Self]()
 
     fn _get_size(self) -> Int:
         var size = 1
@@ -35,7 +35,7 @@ struct MojTensor(Copyable,Movable):
 
     fn zero_grad(mut self):
         if self.requires_grad:
-            self.grad = Optional[MojTensor]()
+            self.grad = Optional[Self]()
 
     fn backward(mut self):
         # Minimal stub: no autograd engine implemented.
@@ -43,7 +43,7 @@ struct MojTensor(Copyable,Movable):
             print("Cannot call backward on a tensor that does not require grad.")
             return
         if not self.grad:
-            self.grad = Optional[MojTensor](ones(self._shape, False))
+            self.grad = Optional[Self](ones(self._shape, False))
 
     fn __str__(self) -> String:
         var s = "Tensor(shape=" + String(self._shape[0])
